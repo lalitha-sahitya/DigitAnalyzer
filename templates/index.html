@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive File Upload</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body class="bg-gray-100">
+
+    <nav class="text-center text-white">
+        <h1 class="bg-blue-700 p-4 text-2xl font-semibold sticky top-0 z-10">&lt;Project /&gt;</h1>
+    </nav>
+
+    <div class="min-h-[93vh] flex flex-col justify-center items-center px-4">
+
+        <!-- Drag & Drop Box -->
+        <div class="flex justify-center items-center w-full">
+            <div id="drop-area"
+                class="border-2 border-dotted border-black p-14 px-28 text-center max-w-[90%] w-full md:w-auto bg-white">
+                <p class="font-semibold text-xl">Drag and drop your files here</p>
+                <div class="mt-2">
+                    <span>Or</span>
+                    <div id="file-picker" class="cursor-pointer text-blue-600 hover:text-blue-900">
+                        Choose your File
+                    </div>
+                    <input type="file" id="file-input" class="hidden" />
+                </div>
+                <p id="file-name" class="text-sm text-gray-600 mt-2"></p>
+            </div>
+        </div>
+
+        <!-- Generate Button -->
+        <div class="text-center p-4">
+            <button id="generate-btn"
+                class="bg-blue-800 p-2 px-4 text-white rounded-xl transition w-auto opacity-50 cursor-not-allowed"
+                disabled>
+                Generate
+            </button>
+        </div>
+
+        <!-- Output Field -->
+        <div id="output-container" class="text-center p-4 w-full hidden">
+            <input type="text" id="output-text" placeholder="The output will appear here.."
+                class="bg-gray-100 p-2 w-full max-w-lg focus:outline-none focus:border-blue-500">
+        </div>
+
+        <!-- Sample Images Button -->
+        <div class="text-center p-4">
+            <button id="toggle-images-btn"
+                class="bg-blue-800 p-2 px-4 text-white hover:bg-blue-700 rounded-xl transition w-auto">
+                View Sample Images
+            </button>
+        </div>
+
+        <!-- Sample Images -->
+        <div id="sample-images" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-6 hidden">
+            <div class="text-center">
+                <h2 class="font-semibold">Sample 1</h2>
+                <div class="h-52 w-52 mx-auto border-2 border-black">
+                    <img src="https://png.pngtree.com/png-clipart/20190611/original/pngtree-writing-a-pen-png-image_2950163.jpg"
+                        alt="Sample 1" class="h-full w-full object-contain">
+                </div>
+            </div>
+            <div class="text-center">
+                <h2 class="font-semibold">Sample 2</h2>
+                <div class="h-52 w-52 mx-auto border-2 border-black">
+                    <img src="https://png.pngtree.com/png-clipart/20190611/original/pngtree-writing-a-pen-png-image_2950163.jpg"
+                        alt="Sample 2" class="h-full w-full object-contain">
+                </div>
+            </div>
+            <div class="text-center">
+                <h2 class="font-semibold">Sample 3</h2>
+                <div class="h-52 w-52 mx-auto border-2 border-black">
+                    <img src="https://png.pngtree.com/png-clipart/20190611/original/pngtree-writing-a-pen-png-image_2950163.jpg"
+                        alt="Sample 3" class="h-full w-full object-contain">
+                </div>
+            </div>
+            <div class="text-center">
+                <h2 class="font-semibold">Sample 4</h2>
+                <div class="h-52 w-52 mx-auto border-2 border-black">
+                    <img src="https://png.pngtree.com/png-clipart/20190611/original/pngtree-writing-a-pen-png-image_2950163.jpg"
+                        alt="Sample 4" class="h-full w-full object-contain">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+
+</body>
+
+</html>
