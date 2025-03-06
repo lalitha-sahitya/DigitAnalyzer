@@ -1,4 +1,3 @@
-
 const dropArea = document.getElementById("drop-area");
 const fileInput = document.getElementById("file-input");
 const filePicker = document.getElementById("file-picker");
@@ -9,7 +8,7 @@ const outputContainer = document.getElementById("output-container");
 const toggleImagesBtn = document.getElementById("toggle-images-btn");
 const sampleImages = document.getElementById("sample-images");
 const cardContainer = document.getElementById("card-container");
-
+const loadingIndicator = document.getElementById("loading");
 
 filePicker.addEventListener("click", () => fileInput.click());
 
@@ -47,38 +46,33 @@ function enableGenerateButton() {
 }
 
 generateBtn.addEventListener("click", async () => {
-    if (!fileInput.files.length) {
-        alert("Please select a file first.");
-        return;
-    }
-
     const file = fileInput.files[0];
     const formData = new FormData();
     formData.append("file", file);
 
+    loadingIndicator.style.display = "block";
+
     try {
-        const response = await fetch("http://127.0.0.1:5000/", {  // Ensure correct URL
+        const response = await fetch("http://127.0.0.1:5000/", {
             method: "POST",
             body: formData
         });
-        
 
         const data = await response.json();
-        outputText.value = `Predicted Digit: ${data.prediction}`;
-        outputContainer.classList.remove("hidden"); // Show the output field
+        outputText.value = `Predicted Digit: ${data.prediction} (Confidence: ${data.confidence}%)`;
+        outputContainer.classList.remove("hidden");
     } catch (error) {
         console.error("Error:", error);
         alert("Failed to get prediction.");
+    } finally {
+        loadingIndicator.style.display = "none";
     }
 });
-
 
 toggleImagesBtn.addEventListener("click", () => {
     const isHidden = sampleImages.classList.toggle("hidden");
     toggleImagesBtn.innerText = isHidden ? "View Sample Images" : "Hide Sample Images";
 });
-
-
 
 const images = [
     { url: "/images/digit_0_1.png", caption: "Sample 1" },
@@ -104,16 +98,17 @@ const images = [
     { url: "/images/digit_9_33.png", caption: "Sample 21" }
 ];
 
-
-// Loop through images and create cards
 images.forEach(image => {
     const card = document.createElement("div");
-    card.classList.add("card");
+    card.classList.add(
+        "p-2", "border", "rounded-xl", "bg-white", "shadow-md",
+        "text-center", "flex", "flex-col", "items-center",
+    );
 
     card.innerHTML = `
-                <img src="${image.url}" alt="${image.caption}">
-                <p>${image.caption}</p>
-            `;
+        <img src="${image.url}" alt="${image.caption}" class="w-18 h-18 rounded-md">
+        <p class="mt-2 text-sm text-gray-600 font-semibold">${image.caption}</p>
+    `;
 
-    cardContainer.appendChild(card);
+    sampleImages.appendChild(card);
 });
