@@ -20,62 +20,80 @@
         #loading {
             display: none;
         }
+
+        /* Drag & Drop Active State */
+        #drop-area.drag-over {
+            background-color: #f3e8ff;
+            border-color: #9333ea;
+        }
     </style>
 </head>
 
-<body class="bg-gray-100">
+<body class="min-h-screen bg-gray-100 flex flex-col">
 
-    <nav class="text-center text-white">
-        <h1 class="bg-blue-700 p-4 text-2xl font-semibold">&lt;DigitAnalyzer /&gt;</h1>
+    <nav class="text-center text-white sticky top-0 z-10 shadow-lg">
+        <h1 class="bg-purple-700 p-4 text-2xl font-semibold tracking-wide">&lt;DigitAnalyzer /&gt;</h1>
     </nav>
 
-    <div class="min-h-[93vh] flex flex-col justify-center items-center px-4">
+    <div class="flex-grow flex flex-col justify-center items-center px-4 py-6">
+
         <!-- Drag & Drop Box -->
-        <div class="flex justify-center items-center w-full pt-4">
+        <div class="w-full max-w-3xl">
             <div id="drop-area"
-                class="border-2 border-dotted border-black p-14 px-28 text-center max-w-[90%] w-full md:w-auto bg-white">
-                <p class="font-semibold text-xl">Drag and drop your files here</p>
-                <div class="mt-2">
+                class="border-2 border-dashed border-gray-500 p-10 rounded-lg text-center bg-white shadow-md hover:shadow-lg transition duration-300">
+                <p class="font-semibold text-lg sm:text-xl">Drag and drop your files here</p>
+                <div class="mt-2 text-gray-600">
                     <span>Or</span>
-                    <div id="file-picker" class="cursor-pointer text-blue-600 hover:text-blue-900">
-                        Choose your File
+                    <div class="mt-1">
+                        <label for="file-input"
+                            class="cursor-pointer text-purple-600 hover:text-purple-900 font-semibold">
+                            Choose your File
+                        </label>
+                        <input type="file" id="file-input" class="hidden" accept="image/*" />
                     </div>
-                    <input type="file" id="file-input" class="hidden" accept="image/*" />
                 </div>
-                <p id="file-name" class="text-sm text-gray-600 mt-2"></p>
+                <p id="file-name" class="text-sm text-gray-500 mt-2"></p>
             </div>
         </div>
 
         <!-- Generate Button -->
-        <div class="text-center p-4">
+        <div class="mt-6">
             <button id="generate-btn"
-                class="bg-blue-800 p-2 px-4 text-white rounded-xl transition w-auto opacity-50 cursor-not-allowed"
+                class="bg-purple-800 p-2 px-6 text-white rounded-lg shadow-md transition duration-300 opacity-50 cursor-not-allowed flex items-center"
                 disabled>
-                Generate
+                <span id="generate-text">Generate</span>
+                <svg id="loading-spinner" class="ml-2 w-5 h-5 text-white hidden animate-spin"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l-3 3 3 3v4a8 8 0 01-8-8z">
+                    </path>
+                </svg>
             </button>
         </div>
 
         <!-- Loading Animation -->
-        <div id="loading" class="text-center p-4">
-            <p class="text-blue-600 font-semibold">Processing...</p>
+        <div id="loading" class="text-center mt-4 hidden">
+            <p class="text-purple-600 font-semibold animate-pulse">Processing...</p>
         </div>
 
         <!-- Output Field -->
-        <div id="output-container" class="text-center p-4 w-full hidden">
-            <input type="text" id="output-text" placeholder="The output will appear here.."
-                class="bg-gray-100 p-2 w-full max-w-lg focus:outline-none focus:border-blue-500">
+        <div id="output-container" class="w-full max-w-xl mt-4 hidden">
+            <input type="text" id="output-text" placeholder="The output will appear here..."
+                class="bg-gray-100 p-3 w-full text-center border border-purple-300 rounded-lg text-purple-700 font-semibold focus:outline-none focus:ring-2 focus:ring-purple-500">
         </div>
 
         <!-- Sample Images Button -->
-        <div class="text-center p-4">
+        <div class="mt-6">
             <button id="toggle-images-btn"
-                class="bg-blue-800 p-2 px-4 text-white hover:bg-blue-700 rounded-xl transition w-auto">
+                class="bg-purple-700 text-white px-6 py-2 rounded-lg shadow-md hover:bg-purple-600 transition border-2 border-gray-800">
                 View Sample Images
             </button>
         </div>
 
         <!-- Sample Images -->
-        <div id="sample-images" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-8 gap-6 px-6 hidden"></div>
+        <div id="sample-images"
+            class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 px-6 mt-4 hidden"></div>
+
     </div>
 
     <script src="/static/script.js"></script>
